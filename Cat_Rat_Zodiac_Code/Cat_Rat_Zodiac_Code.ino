@@ -5,6 +5,10 @@ Servo bush;
 Servo push;
 Servo wheel;
 
+const int ledOne = 1;
+const int ledTwo = 4;
+const int ledThree = 8;
+
 const int buttonOnePin = 13;
 int buttonOneState = 0;
 int lastButtonOneState = 0;
@@ -36,6 +40,9 @@ void setup() {
   wheel.attach(11);
   wheel.write(0);
 
+  pinMode(ledOne, OUTPUT);
+  pinMode(ledTwo, OUTPUT);
+  pinMode(ledThree, OUTPUT);
   pinMode(buttonOnePin, INPUT);
   pinMode(buttonTwoPin, INPUT);
   pinMode(buttonThreePin, INPUT);
@@ -49,8 +56,8 @@ void loop() {
 
   //interaction one - button one starts to phase two
   if (stageTwo == false) {
-    //Serial.println("Race hasn't started");
     buttonOneState = digitalRead(buttonOnePin);
+    digitalWrite(ledOne, HIGH);
 
     if (buttonOneState != lastButtonOneState) {
       if (buttonOneState == HIGH) {
@@ -58,11 +65,13 @@ void loop() {
         Serial.println("Race started!");
       }
     }
+    lastButtonOneState = buttonOneState;
   }
 
   if (stageTwo == true) {
     //button one activates led one to turn off
-    //Serial.println("Race started!");
+    digitalWrite(ledTwo, HIGH);
+    digitalWrite(ledOne, LOW);
   }
 
   //interaction two - button two will trigger arrow
@@ -82,6 +91,7 @@ void loop() {
         bushStay = true;
       }
     }
+   lastButtonThreeState = buttonThreeState;
   }
   if (bushStay == true) {
     bush.write(0); //bush opens up
@@ -95,13 +105,16 @@ void loop() {
 
     if (buttonFourState != lastButtonFourState) {
       if (buttonFourState == HIGH) {
-        Serial.println("buttonfour is fine");
+        //Serial.println("buttonfour is fine");
         stageThree = true;
       }
     }
+   lastButtonFourState = buttonFourState;
   }
   if (stageThree == true) {
     push.write(180);
+    digitalWrite(ledTwo, LOW);
+    digitalWrite(ledThree, HIGH);
   }
   else {
     push.write(0);
@@ -119,13 +132,12 @@ void loop() {
         Serial.write("finale button pressed");
       }
     }
+   lastButtonFiveState = buttonFiveState;
   }
   if (finale == true) {
-    wheel.write(180);
-    //Serial.println("Buttonisdown");
+    wheel.write(155);
   } else {
     wheel.write(0);
-    //Serial.println("buttonisup");
   }
 
 }
