@@ -71,7 +71,6 @@ void loop() {
   if (stageTwo == true) {
     //button one activates led one to turn off
     digitalWrite(ledTwo, HIGH);
-    digitalWrite(ledOne, LOW);
   }
 
   //interaction two - button two will trigger arrow
@@ -113,7 +112,6 @@ void loop() {
   }
   if (stageThree == true) {
     push.write(180);
-    digitalWrite(ledTwo, LOW);
     digitalWrite(ledThree, HIGH);
   }
   else {
