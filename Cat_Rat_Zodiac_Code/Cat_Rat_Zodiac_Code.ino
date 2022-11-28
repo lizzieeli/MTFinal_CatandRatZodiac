@@ -1,6 +1,6 @@
 #include <Servo.h>
 
-Servo arrow;
+Servo sign;
 Servo bush;  
 Servo push;
 Servo wheel;
@@ -33,7 +33,8 @@ bool stageThree = false;
 bool finale = false;
 
 void setup() {
-  arrow.attach(3);
+  sign.attach(3);
+  sign.write(40);
   bush.attach(12);
   bush.write(180);
   push.attach(9);
@@ -73,12 +74,12 @@ void loop() {
     digitalWrite(ledTwo, HIGH);
   }
 
-  //interaction two - button two will trigger arrow
+  //interaction two - button two will trigger caution sign
   if (digitalRead(buttonTwoPin) == HIGH) {
-    arrow.write(140); //arrow falls down
+    sign.write(120); //sign points up
     
   } else {
-    arrow.write(0);
+    sign.write(40);
   }
 
   //interaction three - button three reveals rat's intents
